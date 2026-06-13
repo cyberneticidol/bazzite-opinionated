@@ -62,9 +62,6 @@ def find_action():
     file.close()
     return output
 
-def brew_eval(args):
-    return f'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && {args}'
-
 def spawn_and_detach(args):
     subprocess.Popen(args, start_new_session=True, stdout=subprocess.DEVNULL)
 
@@ -85,49 +82,7 @@ def spawn_ujust(script):
     args = make_shellcmd_argv(cmd)
     spawn_and_detach(args)
 
-def spawn_brew_ublue(cask):
-    brew = brew_eval(f'brew tap ublue-os/tap && brew install --cask {cask}')
-    cmd  = make_popup_terminal_shellcmd(brew)
-    args = make_shellcmd_argv(cmd)
-    spawn_and_detach(args)
-
 # ---
-
-def handle_jetbrains():
-
-    def appid_is_jetbrains(appid):
-        if appid.startswith('com.jetbrains.') or appid == 'com.google.AndroidStudio':
-            return True
-
-    match stage:
-        case 'setup':
-            if transaction_type == 'install' and appid_is_jetbrains(transaction_appid):
-                return 'ok'
-            else:
-                return 'pass'
-
-        case 'setup-dialog':
-            return 'ok'
-
-        case 'teardown-dialog':
-            if dialog_response_id == 'run-ujust':
-                return 'ok'
-            else:
-                return 'abort'
-
-        case 'catch':
-            return 'abort'
-
-        case 'action':
-            try:
-                spawn_ujust('install-jetbrains-toolbox')
-            except:
-                pass
-            return ''
-
-        case 'teardown':
-            # always prevent installation of JetBrains flatpaks
-            return 'deny'
 
 def handle_vscode():
 

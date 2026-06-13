@@ -187,9 +187,6 @@ qrencode -o "$SECUREBOOT_DOC_URL_QR" "$SECUREBOOT_DOC_URL"
         bazzite-hardware-setup.service \
         ublue-hardware-setup.service \
         bootloader-update.service \
-        brew-upgrade.timer \
-        brew-update.timer \
-        brew-setup.service \
         rpm-ostreed-automatic.timer \
         uupd.timer \
         ublue-guest-user.service \

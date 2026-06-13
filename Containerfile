@@ -114,14 +114,6 @@ RUN --mount=type=bind,src=firmware,dst=/ctx/firmware \
     cp -a /tmp/firmware/. / && \
     rm -rf /tmp/firmware
 
-# Copy Homebrew files from the brew image
-ARG BREW_IMAGE=ghcr.io/ublue-os/brew:latest@sha256:ca91068f51ce663d495ccfc829352d6621ec95f6c7db447ade55023b222f9762
-COPY --from=${BREW_IMAGE} /system_files/ /tmp/brew_files/
-RUN find /tmp/brew_files -type f -printf '/%P\0' > /tmp/brew_list.txt && \
-    cp -a /tmp/brew_files/. / && \
-    xargs -0 -a /tmp/brew_list.txt setfattr -h -n user.component -v "homebrew" && \
-    rm -rf /tmp/brew_files /tmp/brew_list.txt
-
 # Install kernel
 RUN --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
@@ -595,7 +587,6 @@ RUN --mount=type=cache,dst=/var/cache \
     ln -s /usr/bin/true /usr/bin/pulseaudio && \
     mkdir -p /etc/flatpak/remotes.d && \
     curl --retry 3 -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo && \
-    systemctl enable brew-setup.service && \
     systemctl disable fw-fanctrl.service && \
     systemctl disable scx_loader.service && \
     systemctl enable input-remapper.service && \
