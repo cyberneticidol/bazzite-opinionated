@@ -348,8 +348,7 @@ RUN --mount=type=cache,dst=/var/cache \
         obs-studio-plugin-vkcapture-hook-libs.i686 \
         openxr && \
     dnf5 -y --enable-repo=terra-mesa --enable-repo=terra --setopt=install_weak_deps=False install \
-        steam \
-        lutris && \
+        steam && \
     dnf5 -y remove \
         gamemode && \
     /ctx/ghcurl "https://raw.githubusercontent.com/Winetricks/winetricks/5a59ea07513b24093bd90fad943ecf9543cf05bc/src/winetricks" -Lo /usr/bin/winetricks && \
@@ -491,7 +490,6 @@ RUN --mount=type=cache,dst=/var/cache \
     cp --no-dereference --preserve=links /usr/lib64/libdrm.so.2 /usr/lib64/libdrm.so && \
     sed -i 's@/usr/bin/steam@/usr/bin/bazzite-steam@g' /usr/share/applications/steam.desktop && \
     sed -i 's@Exec=steam steam://open/bigpicture@Exec=/usr/bin/bazzite-steam-bpm@g' /usr/share/applications/steam.desktop && \
-    sed -i 's|^Exec=lutris %U$|Exec=env PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python lutris %U|' /usr/share/applications/net.lutris.Lutris.desktop && \
     mkdir -p /etc/skel/.config/autostart/ && \
     cp "/usr/share/applications/steam.desktop" "/etc/skel/.config/autostart/steam.desktop" && \
     sed -i 's@/usr/bin/bazzite-steam %U@/usr/bin/bazzite-steam -silent %U@g' /etc/skel/.config/autostart/steam.desktop && \
