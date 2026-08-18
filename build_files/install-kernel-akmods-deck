@@ -2,7 +2,7 @@
 
 set -eoux pipefail
 
-echo "::group::Executing install-kernel-akmods"
+echo "::group::Executing install-kernel-akmods-deck"
 trap 'echo "::endgroup::"' EXIT
 
 # create a shims to bypass kernel install triggering dracut/rpm-ostree
