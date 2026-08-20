@@ -1,6 +1,6 @@
 name: Build Bazzite
 on:
-  schedule:
+  #schedule:
   #  - cron: "40 4 * * 1" # 4:40 utc monday
   pull_request:
     branches:
