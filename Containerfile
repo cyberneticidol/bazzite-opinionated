@@ -468,6 +468,7 @@ RUN --mount=type=cache,dst=/var/cache \
     echo "import \"/usr/share/ublue-os/just/92-bazzite-verify.just\"" >> /usr/share/ublue-os/justfile && \
     echo "import \"/usr/share/ublue-os/just/93-bazzite-update.just\"" >> /usr/share/ublue-os/justfile && \
     echo "import \"/usr/share/ublue-os/just/94-bazzite-protonplus.just\"" >> /usr/share/ublue-os/justfile && \
+    echo "import \"/usr/share/ublue-os/just/95-bazzite-deck-session.just\"" >> /usr/share/ublue-os/justfile && \
     if grep -q "silverblue" <<< "${BASE_IMAGE_NAME}"; then \
         mkdir -p "/usr/share/ublue-os/dconfs/desktop-silverblue/" && \
         cp "/usr/share/glib-2.0/schemas/zz0-"*"-bazzite-desktop-silverblue-"*".gschema.override" "/usr/share/ublue-os/dconfs/desktop-silverblue/" && \
@@ -795,13 +796,14 @@ RUN --mount=type=cache,dst=/var/cache \
     if [ "${NVIDIA_FLAVOR}" = "nvidia-lts" ]; then \
         systemctl disable cardwired.service && \
         dnf5 -y remove \
-            cardwire-gui \
-            cardwire && \
-        rm -f /usr/bin/switcherooctl && \
+            cardwire-gui && \
+        dnf5 -y swap \
+            cardwire switcheroo-control && \
         dnf5 -y install --enable-repo=terra \
-            switcheroo-control \
-            supergfxctl && \
-        systemctl enable supergfxd.service \
+            supergfxctl \
+    ; fi && \
+    if ! grep -q "deck" <<< "${IMAGE_NAME}"; then \
+        rm -f /usr/lib/modprobe.d/nvidia-deck.conf \
     ; fi && \
     /ctx/cleanup
 
