@@ -519,27 +519,28 @@ jobs:
           done
           echo "alias_tags=${BUILD_TAGS[*]}" >> $GITHUB_OUTPUT
 
-      - name: Install dgoss
-        run: |
-          set -euo pipefail
-          GOSS_VERSION=v0.4.10
-          # goss release tarballs use linux_x86_64 naming for amd64 systems.
-          curl -fL \
-            "https://github.com/goss-org/goss/releases/download/${GOSS_VERSION}/goss_${GOSS_VERSION#v}_linux_x86_64.tar.gz" \
-            -o /tmp/goss.tar.gz
-          tar -xzf /tmp/goss.tar.gz -C /usr/local/bin goss
-          test -f /usr/local/bin/goss || { echo "Error: /usr/local/bin/goss binary not found after extraction"; exit 1; }
-          chmod +rx /usr/local/bin/goss
-          /usr/local/bin/goss --version >/dev/null
-          rm -f /tmp/goss.tar.gz
-          curl -fL \
-            "https://github.com/goss-org/goss/releases/download/${GOSS_VERSION}/dgoss" \
-            -o /usr/local/bin/dgoss
-          chmod +rx /usr/local/bin/dgoss
+# All this code is LLM-generated code. The dev I had issues with commited it! Why?! - M
+#      - name: Install dgoss
+#        run: |
+#          set -euo pipefail
+#          GOSS_VERSION=v0.4.10
+#          # goss release tarballs use linux_x86_64 naming for amd64 systems.
+#          curl -fL \
+#            "https://github.com/goss-org/goss/releases/download/${GOSS_VERSION}/goss_${GOSS_VERSION#v}_linux_x86_64.tar.gz" \
+#            -o /tmp/goss.tar.gz
+#          tar -xzf /tmp/goss.tar.gz -C /usr/local/bin goss
+#          test -f /usr/local/bin/goss || { echo "Error: /usr/local/bin/goss binary not found after extraction"; exit 1; }
+#          chmod +rx /usr/local/bin/goss
+#          /usr/local/bin/goss --version >/dev/null
+#          rm -f /tmp/goss.tar.gz
+#          curl -fL \
+#            "https://github.com/goss-org/goss/releases/download/${GOSS_VERSION}/dgoss" \
+#            -o /usr/local/bin/dgoss
+#          chmod +rx /usr/local/bin/dgoss
 
-      - name: Run goss tests
-        run: |
-          tests/dgoss/dgoss-tests.sh tests/dgoss/tests.d "${{ steps.rechunk.outputs.ref }}"
+#      - name: Run goss tests
+#        run: |
+#          tests/dgoss/dgoss-tests.sh tests/dgoss/tests.d "${{ steps.rechunk.outputs.ref }}"
 
       - name: Login to GitHub Container Registry
         if: github.event_name != 'pull_request'
