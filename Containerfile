@@ -63,6 +63,7 @@ COPY system_files/desktop/shared/ system_files/desktop/${BASE_IMAGE_NAME}/ /
 RUN find /usr/share/ublue-os/docs -type f -exec setfattr -n user.component -v "ublue-docs" {} +
 
 # Install needed firmware blobs
+
 RUN --mount=type=bind,src=firmware,dst=/ctx/firmware \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
@@ -73,6 +74,7 @@ RUN --mount=type=bind,src=firmware,dst=/ctx/firmware \
     rm -rf /tmp/firmware
 
 # Copy Homebrew files from the brew image
+
 ARG BREW_IMAGE=ghcr.io/ublue-os/brew:latest@sha256:ca91068f51ce663d495ccfc829352d6621ec95f6c7db447ade55023b222f9762
 COPY --from=${BREW_IMAGE} /system_files/ /tmp/brew_files/
 RUN find /tmp/brew_files -type f -printf '/%P\0' > /tmp/brew_list.txt && \
@@ -81,6 +83,7 @@ RUN find /tmp/brew_files -type f -printf '/%P\0' > /tmp/brew_list.txt && \
     rm -rf /tmp/brew_files /tmp/brew_list.txt
 
 # Install kernel
+
 RUN --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=bind,from=akmods,src=/kernel-rpms,dst=/tmp/kernel-rpms \
@@ -94,6 +97,7 @@ RUN --mount=type=cache,dst=/var/cache \
     /ctx/cleanup
 
 # Setup Copr repos
+
 RUN --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=cache,dst=/var/log \
@@ -127,6 +131,7 @@ RUN --mount=type=cache,dst=/var/cache \
     /ctx/cleanup
 
 # Install Valve's patched Mesa, Bluez, and Xwayland
+
 RUN --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=cache,dst=/var/log \
@@ -181,6 +186,7 @@ RUN --mount=type=cache,dst=/var/cache \
     /ctx/cleanup
 
 # Remove unneeded packages
+
 RUN --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=cache,dst=/var/log \
@@ -190,6 +196,7 @@ RUN --mount=type=cache,dst=/var/cache \
     /ctx/cleanup
 
 # Install new packages
+
 RUN --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=bind,from=ctx,source=/,target=/ctx \
@@ -307,6 +314,7 @@ RUN --mount=type=cache,dst=/var/cache \
     /ctx/cleanup
 
 # Install Steam, plus supporting packages
+
 RUN --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=cache,dst=/var/log \
@@ -355,6 +363,7 @@ RUN --mount=type=cache,dst=/var/cache \
     /ctx/cleanup
 
 # Install ujust-picker from GitHub releases
+
 RUN --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=cache,dst=/var/log \
@@ -367,6 +376,7 @@ RUN --mount=type=cache,dst=/var/cache \
     /ctx/cleanup
 
 # Configure KDE & GNOME
+
 RUN --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=bind,from=ctx,source=/,target=/ctx \
@@ -410,6 +420,7 @@ RUN --mount=type=cache,dst=/var/cache \
     /ctx/cleanup
 
 # ublue-os-media-automount-udev, mount non-removable device partitions automatically under /media/media-automount/
+
 RUN --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=cache,dst=/var/log \
@@ -427,14 +438,18 @@ RUN --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/tmp \
-    dnf5 install -y --enable-repo=copr:copr.fedorainfracloud.org:krischan:rage \
+    dnf5 copr enable krischan/rage && \
+    dnf5 copr enable krischan/age-plugin-yubikey && \
+    dnf5 install -y \
         rage && \
-    dnf5 install -y --enable-repo=copr:copr.fedorainfracloud.org:krischan:age-plugin-yubikey \
+    dnf5 install -y \
         age-plugin-yubikey  && \
+    dnf5 copr disable krischan/rage && \
+    dnf5 copr disable krischan/age-plugin-yubikey && \
     /ctx/cleanup
 
-
 # Cleanup & Finalize
+
 COPY system_files/overrides /
 
 RUN --mount=type=cache,dst=/var/cache \
