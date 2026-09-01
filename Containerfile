@@ -438,14 +438,14 @@ RUN --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/tmp \
-    dnf5 copr enable krischan/rage && \
-    dnf5 copr enable krischan/age-plugin-yubikey && \
+    dnf5 -y copr enable krischan/rage && \
+    dnf5 -y copr enable krischan/age-plugin-yubikey && \
     dnf5 install -y \
         rage && \
     dnf5 install -y \
         age-plugin-yubikey  && \
-    dnf5 copr disable krischan/rage && \
-    dnf5 copr disable krischan/age-plugin-yubikey && \
+    dnf5 -y copr disable krischan/rage && \
+    dnf5 -y copr disable krischan/age-plugin-yubikey && \
     /ctx/cleanup
 
 # Cleanup & Finalize
