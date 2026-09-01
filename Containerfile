@@ -448,6 +448,18 @@ RUN --mount=type=cache,dst=/var/cache \
     dnf5 -y copr disable krischan/age-plugin-yubikey && \
     /ctx/cleanup
 
+# Install Librewolf, because Screw Firefox.
+
+ RUN --mount=type=cache,dst=/var/cache \
+    --mount=type=cache,dst=/var/cache/libdnf5 \
+    --mount=type=cache,dst=/var/log \
+    --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=tmpfs,dst=/tmp \
+    dnf5 -y config-manager addrepo --from-repofile=https://repo.librewolf.net/librewolf.repo && \
+    dnf5 install -y \
+        librewolf && \
+    /ctx/cleanup
+
 # Cleanup & Finalize
 
 COPY system_files/overrides /
