@@ -420,6 +420,20 @@ RUN --mount=type=cache,dst=/var/cache \
     { systemctl enable ublue-os-media-automount.service || true; } && \
     /ctx/cleanup
 
+# Install rage and the rust version of the yubikey addon
+
+RUN --mount=type=cache,dst=/var/cache \
+    --mount=type=cache,dst=/var/cache/libdnf5 \
+    --mount=type=cache,dst=/var/log \
+    --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=tmpfs,dst=/tmp \
+    dnf5 install -y --enable-repo=copr:copr.fedorainfracloud.org:krischan:rage \
+        rage && \
+    dnf5 install -y --enable-repo=copr:copr.fedorainfracloud.org:krischan:age-plugin-yubikey \
+        age-plugin-yubikey  && \
+    /ctx/cleanup
+
+
 # Cleanup & Finalize
 COPY system_files/overrides /
 
