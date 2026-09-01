@@ -237,6 +237,7 @@ RUN --mount=type=cache,dst=/var/cache \
         lm_sensors \
         iio-sensor-proxy \
         fw-ectool \
+        minisign \
         fw-fanctrl \
         framework-system \
         udica \
