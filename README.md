@@ -142,7 +142,7 @@ Builds with the GNOME desktop environment are available in both desktop and deck
 - Custom menu in the top bar for returning to game mode, launching Steam, and opening a number of useful utilities.
 - [GSConnect](https://extensions.gnome.org/extension/1319/gsconnect/) preinstalled and ready to use.
 - Numerous optional extensions pre-installed, including [important user experience fixes](https://www.youtube.com/watch?v=nbCg9_YgKgM).
-- Automatic updates for the [Firefox GNOME theme](https://github.com/rafaelmardojai/firefox-gnome-theme) and [Thunderbird GNOME theme](https://github.com/rafaelmardojai/thunderbird-gnome-theme). <sup><sub>(If installed)</sub></sup>
+- Automatic updates for the [Thunderbird GNOME theme](https://github.com/rafaelmardojai/thunderbird-gnome-theme). <sup><sub>(If installed)</sub></sup>
 
 > [!IMPORTANT]
 > **ISOs can be downloaded from our [website](https://download.bazzite.gg), and a helpful install guide can be found [here](https://docs.bazzite.gg/General/Installation_Guide/).**
