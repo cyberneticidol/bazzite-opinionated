@@ -306,7 +306,7 @@ RUN --mount=type=cache,dst=/var/cache \
     sed -i 's/ --xdg-runtime=\\"${XDG_RUNTIME_DIR}\\"//g' /usr/bin/btrfs-assistant-launcher && \
     /ctx/cleanup
 
-# Install Steam & Lutris, plus supporting packages
+# Install Steam, plus supporting packages
 RUN --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=cache,dst=/var/log \
