@@ -463,15 +463,15 @@ RUN --mount=type=cache,dst=/var/cache \
 
 # Come to think of it, why not add Token2's FIDO2 Bridge? It does have an RPM, but it needs grabbing from the git repo.
 
- RUN --mount=type=cache,dst=/var/cache \
-    --mount=type=cache,dst=/var/cache/libdnf5 \
-    --mount=type=cache,dst=/var/log \
-    --mount=type=bind,from=ctx,source=/,target=/ctx \
-    --mount=type=tmpfs,dst=/tmp \
-    wget https://github.com/cyberneticidol/token2-fido-bridge/releases/download/v1.2.1/token2-fido-bridge-1.2.1-1.fc44.x86_64.rpm && \
-    dnf5 install -y \
-        token2-fido-bridge-1.2.1-1.fc44.x86_64.rpm  && \
-    /ctx/cleanup
+# RUN --mount=type=cache,dst=/var/cache \
+#    --mount=type=cache,dst=/var/cache/libdnf5 \
+#    --mount=type=cache,dst=/var/log \
+#    --mount=type=bind,from=ctx,source=/,target=/ctx \
+#    --mount=type=tmpfs,dst=/tmp \
+#    wget https://github.com/cyberneticidol/token2-fido-bridge/releases/download/v1.2.1/token2-fido-bridge-1.2.1-1.fc44.x86_64.rpm && \
+#    dnf5 install -y \
+#        token2-fido-bridge-1.2.1-1.fc44.x86_64.rpm  && \
+#    /ctx/cleanup
 
 # Cleanup & Finalize
 
