@@ -1,7 +1,7 @@
 name: Build Bazzite
 on:
-  #schedule:
-  #  - cron: "40 4 * * 1" # 4:40 utc monday
+  schedule:
+    - cron: "25 9 * * 1" # Running at 9:25 UTC every Monday. Why yes, I am referencing the ITV traditional start-up time, what gave it away?
   #pull_request:
   #  branches:
   #    - testing
